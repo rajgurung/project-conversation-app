@@ -1,0 +1,4 @@
+<%= simple_form_for([project, comment]) do |f| %>
+  <%= f.input :body, label: "Your Comment" %>
+  <%= f.button :submit, "Post Comment" %>
+<% end %>

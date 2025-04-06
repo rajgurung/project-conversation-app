@@ -1,0 +1,15 @@
+<h1>Select a Tenant</h1>
+
+<% if @tenants.any? %>
+  <ul>
+    <% @tenants.each do |tenant| %>
+      <li>
+        <%= form_with url: switch_tenant_path(tenant), method: :post do %>
+          <%= submit_tag tenant.name %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You are not assigned to any tenants.</p>
+<% end %>
