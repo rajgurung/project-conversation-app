@@ -79,3 +79,5 @@ gem "stimulus-rails", "~> 1.3"
 
 # Send mailer asynchronously
 # gem 'sidekiq'
+
+gem 'pg'
