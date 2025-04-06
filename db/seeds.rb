@@ -10,7 +10,7 @@
 
 puts "Seeding data for #{Rails.env} environment..."
 
-return p 'Exiting ... its a prod env' if Rails.env == 'production'
+# return p 'Exiting ... its a prod env' if Rails.env == 'production'
 
 puts "Seeding development data..."
 
@@ -24,22 +24,46 @@ raise "CLIENT_USER_PASSWORD is not set!" if client_password.blank?
 # Create tenant
 tenant = Tenant.find_or_create_by!(name: "Acme Corp")
 
-# Internal Staff
-staff = User.find_or_create_by!(email: "staff@acme.com") do |user|
-  user.name = "Internal Staff"
+# Internal Admin Staff
+staff = User.find_or_create_by!(email: "admin@staff.com") do |user|
+  user.name = "James Ryan"
   user.password = staff_password
 end
-Membership.find_or_create_by!(user: staff, tenant: tenant, role: "admin")
+Membership.find_or_create_by!(user: staff, tenant: tenant, role: Membership::ADMIN)
+
+# Internal Staff
+staff = User.find_or_create_by!(email: "staff@staff.com") do |user|
+  user.name = "Phil Smith"
+  user.password = staff_password
+end
+Membership.find_or_create_by!(user: staff, tenant: tenant, role: Membership::STAFF)
 
 # External Client
 client = User.find_or_create_by!(email: "client@acme.com") do |user|
   user.name = "External Client"
   user.password = client_password
 end
-Membership.find_or_create_by!(user: client, tenant: tenant, role: "client")
+Membership.find_or_create_by!(user: client, tenant: tenant, role: Membership::CLIENT)
 
 # Project
 Project.find_or_create_by!(name: "Website Redesign", tenant: tenant) do |project|
+  project.status = "New"
+end
+
+#################################################################################
+
+# Setup Another Client
+tenant = Tenant.find_or_create_by!(name: "Another Corp")
+
+# Internal Staff
+staff = User.find_or_create_by!(email: "admin@staff.com") do |user|
+  user.name = "James Ryan"
+  user.password = staff_password
+end
+Membership.find_or_create_by!(user: staff, tenant: tenant, role: Membership::ADMIN)
+
+# Project
+Project.find_or_create_by!(name: "Logo Design", tenant: tenant) do |project|
   project.status = "New"
 end
 

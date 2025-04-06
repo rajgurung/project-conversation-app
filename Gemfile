@@ -49,12 +49,16 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem 'dotenv-rails'
+  gem 'annotate'
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
 end
 
 # Authentication
@@ -69,7 +73,9 @@ gem 'simple_form'
 # For local email previews
 gem 'letter_opener', group: :development
 
-
 gem "turbo-rails", "~> 2.0"
 
 gem "stimulus-rails", "~> 1.3"
+
+# Send mailer asynchronously
+# gem 'sidekiq'
