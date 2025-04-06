@@ -81,5 +81,3 @@ gem "stimulus-rails", "~> 1.3"
 # gem 'sidekiq'
 
 gem 'pg'
-
-gem 'puma'
