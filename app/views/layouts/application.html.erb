@@ -22,6 +22,15 @@
   </head>
 
   <body>
+  <%= link_to "← Back to Projects", projects_path, style: "...link styles..." if show_back_to_projects_link? %>
+
+  <% if user_signed_in? %>
+      <p>
+        Signed in as <strong><%= current_user.email %></strong> |
+        <%= button_to 'Sign Out', destroy_user_session_path, method: :delete %>
+      </p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

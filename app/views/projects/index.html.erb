@@ -1,2 +1,38 @@
-<h1>Projects#index</h1>
-<p>Find me in app/views/projects/index.html.erb</p>
+<h1>Projects</h1>
+
+<div style="margin-bottom: 1rem;">
+  <%= link_to "New Project", new_project_path, class: "btn btn-primary" %>
+</div>
+
+<ul style="list-style: none; padding: 0;">
+  <% @projects.each do |project| %>
+    <li style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 8px;">
+      <h3 style="margin-bottom: 0.25rem;">
+        <%= link_to project.name, project_path(project), style: "text-decoration: none; color: #333;" %>
+      </h3>
+
+      <span style="display: inline-block; padding: 0.2rem 0.5rem; background: #eef; border-radius: 4px; font-size: 0.85rem;">
+        <strong>Status:</strong> <%= project.status %>
+      </span>
+
+      <% latest_change = project.comments.where(comment_type: "status_change").order(created_at: :desc).first %>
+      <% if latest_change %>
+        <% role = latest_change.user.role_for(current_tenant) %>
+        <div style="margin-top: 0.75rem; font-size: 0.9rem; color: #555;">
+          <p style="margin: 0;">
+            🔄 <em>Last changed from</em> <strong><%= latest_change.from_status %></strong>
+            <em>to</em> <strong><%= latest_change.to_status %></strong>
+          </p>
+          <p style="margin: 0;">
+            💬 <strong>Reason:</strong> <%= truncate(latest_change.reason, length: 60) %>
+          </p>
+          <p style="margin: 0.25rem 0 0;">
+            👤 By <strong><%= latest_change.user.name %></strong>
+            <span style="color: #888; font-style: italic;">(<%= role&.capitalize || "Unknown" %>)</span>
+            at <%= latest_change.created_at.strftime("%d %b %Y %H:%M") %>
+          </p>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

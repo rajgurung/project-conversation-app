@@ -1,2 +1,58 @@
-<h1>Projects#show</h1>
-<p>Find me in app/views/projects/show.html.erb</p>
+<h1><%= @project.name %></h1>
+<p><strong>Status:</strong> <%= @project.status %></p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
+
+<hr>
+
+<h2>Conversation History</h2>
+
+<% @project.comments.order(created_at: :desc).each do |comment| %>
+  <div style="margin-bottom: 1.5em; padding: 1em; border: 1px solid #eee; border-radius: 5px;">
+    <% role = comment.user.role_for(current_tenant) %>
+    <small>
+      <strong><%= comment.user.name %></strong>
+      (<%= role&.capitalize || "Unknown" %>)
+      @ <%= comment.created_at.strftime("%d %b %Y %H:%M") %>
+    </small><br>
+
+
+    <% if comment.comment_type == "status_change" %>
+      <p>
+        <em>Status changed from <%= comment.from_status %> to <%= comment.to_status %></em><br>
+        <strong>Reason:</strong> <%= comment.reason %>
+      </p>
+    <% else %>
+      <p><%= simple_format(comment.body) %></p>
+    <% end %>
+  </div>
+<% end %>
+
+
+<hr>
+
+<h2>Add a Comment</h2>
+<%= render 'comments/form', project: @project, comment: Comment.new %>
+
+<% if current_user.role_for(current_tenant).in?(["admin", "staff"]) %>
+  <h2>Change Project Status</h2>
+
+  <% available_statuses = current_user.role_for(current_tenant) == "admin" ? Project::STATUSES : Project::STATUSES - [Project::ARCHIVED] %>
+
+  <%= form_with url: change_status_project_path(@project), method: :patch do %>
+    <div>
+      <%= label_tag :to_status, "New Status" %><br>
+      <%= select_tag :to_status, options_for_select(available_statuses, @project.status) %>
+    </div>
+
+    <div style="margin-top: 10px;">
+      <%= label_tag :reason, "Reason for change" %><br>
+      <%= text_area_tag :reason, nil, placeholder: "Explain why the status is changing", rows: 3 %>
+    </div>
+
+    <div style="margin-top: 10px;">
+      <%= submit_tag "Update Status" %>
+    </div>
+  <% end %>
+<% end %>

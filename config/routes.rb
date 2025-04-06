@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
-  resources :projects
+  get "comments/create"
+  resources :projects do
+    resources :comments, only: [:create]
+    patch :change_status, on: :member
+  end
+
+  resources :tenants, only: [:index] do
+    post :switch, on: :member
+  end
 
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -13,5 +21,13 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  authenticated :user do
+    root to: "tenants#index", as: :authenticated_root
+  end
+
+  unauthenticated do
+    devise_scope :user do
+      root to: "devise/sessions#new", as: :unauthenticated_root
+    end
+  end
 end
