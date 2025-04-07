@@ -1,24 +1,29 @@
-# README
+# Design Review Docu
+I have create a Design Docu to address the Q&A aspects.
+https://www.notion.so/Project-Conversation-Tracker-Design-Review-Document-1cd901f5e85380bc979aeac0dd74a7a6#1cd901f5e85380e1bdedcbb0dbc7b287
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Pre-requisite
+- ruby 3.4.2
+- rails 8.0.2
 
-Things you may want to cover:
+## Running the Project ( ideally a script would have been a better to run this setup)
+- bundle install
+- bundle exec rails db:setup
+- rails s
 
-* Ruby version
+## User Emails
+- admin@admin.com | Pass1234
+- staff@staff.com | Pass1234
+- client@acme.com | Pass1234
 
-* System dependencies
+## ✅ Role Permissions Summary
 
-* Configuration
+| Action                | Admin | Staff | Client |
+|-----------------------|:-----:|:-----:|:------:|
+| View Projects         | ✅    | ✅    | ✅     |
+| Create/Update Project | ✅    | ✅    | ✅     |
+| Change Status         | ✅    | ✅    | ❌     |
+| Archive Project       | ✅    | ❌    | ❌     |
+| Delete Project        | ✅    | ❌    | ❌     |
+| Add Comments          | ✅    | ✅    | ✅     |
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
