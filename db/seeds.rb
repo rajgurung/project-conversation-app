@@ -15,8 +15,8 @@ puts "Seeding data for #{Rails.env} environment..."
 puts "Seeding development data..."
 
 # Fetch passwords from ENV and validate presence
-staff_password = ENV["STAFF_USER_PASSWORD"]
-client_password = ENV["CLIENT_USER_PASSWORD"]
+staff_password = ENV["STAFF_USER_PASSWORD"] || "Pass1234"
+client_password = ENV["CLIENT_USER_PASSWORD"] || "Pass1234"
 
 raise "STAFF_USER_PASSWORD is not set!" if staff_password.blank?
 raise "CLIENT_USER_PASSWORD is not set!" if client_password.blank?
