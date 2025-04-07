@@ -9,6 +9,7 @@ https://www.notion.so/Project-Conversation-Tracker-Design-Review-Document-1cd901
 ## Running the Project ( ideally a script would have been a better to run this setup)
 - bundle install
 - bundle exec rails db:setup
+- bundle exec rspec
 - rails s
 
 ## User Emails
