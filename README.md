@@ -16,7 +16,7 @@ https://www.notion.so/Project-Conversation-Tracker-Design-Review-Document-1cd901
 - https://project-conversation-app-8cf60172303c.herokuapp.com
 
 ## User Emails
-- admin@admin.com | Pass1234
+- admin@staff.com | Pass1234
 - staff@staff.com | Pass1234
 - client@acme.com | Pass1234
 
